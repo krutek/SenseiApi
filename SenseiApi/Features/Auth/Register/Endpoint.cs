@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using SenseiApi.Features.Auth.Register;
-
-namespace JapaneseLearning.Api.Features.Auth.Register;
+namespace SenseiApi.Features.Auth.Register;
 
 public static class Endpoint
 {
@@ -20,7 +18,9 @@ public static class Endpoint
                 return Results.Created(
                     $"/users/{result.UserId}",
                     result);
-            });
+            })
+             .WithName("Register")
+             .WithTags("Authentication");
 
         return app;
     }

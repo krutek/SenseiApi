@@ -8,6 +8,7 @@
         public string PasswordHash { get; private set; }
         public string Email { get; private set; }
         public DateTime CreatedAt { get; private set; }
+        public ICollection<RefreshToken> RefreshTokens { get; private set; } = new List<RefreshToken>();
 
         private User() { } // dla EF Core
 

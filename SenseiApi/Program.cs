@@ -1,8 +1,14 @@
 using FluentValidation;
-using JapaneseLearning.Api.Features.Auth.Register;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using SenseiApi.Features.Auth.Login;
+using SenseiApi.Features.Auth.Logout;
+using SenseiApi.Features.Auth.Register;
+using SenseiApi.Infrastructure.Authentication;
 using SenseiApi.Persistence;
+using System.Text;
 
 namespace SenseiApi
 {
@@ -26,6 +32,36 @@ namespace SenseiApi
                 cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
             });
             builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
+            builder.Services.AddScoped<JwtGenerator>();
+            builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwtOptions = builder.Configuration
+            .GetSection(JwtOptions.SectionName)
+            .Get<JwtOptions>()!;
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = jwtOptions.Issuer,
+
+            ValidateAudience = true,
+            ValidAudience = jwtOptions.Audience,
+
+            ValidateIssuerSigningKey = true,
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtOptions.Key)),
+
+            ValidateLifetime = true,
+
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+            builder.Services.AddAuthorization();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -40,9 +76,12 @@ namespace SenseiApi
 
 
             app.MapRegisterEndpoint();
+            app.MapLoginEndpoint();
+            app.MapLogoutEndpoint();
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
