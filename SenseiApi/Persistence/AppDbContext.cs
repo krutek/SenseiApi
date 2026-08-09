@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SenseiApi.Domain;
+using SenseiApi.Domain.Flahcards;
 
 namespace SenseiApi.Persistence
 {

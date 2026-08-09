@@ -1,4 +1,4 @@
-﻿namespace SenseiApi.Domain
+﻿namespace SenseiApi.Domain.Flahcards
 {
     public class Flashcard
     {
