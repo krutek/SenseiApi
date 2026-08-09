@@ -7,7 +7,7 @@ namespace SenseiApi.Features.Flashcards
         {
             app.MapGet("/flashcards/random", async (IMediator mediator) =>
             {
-                var query = new FlashcardCommand();
+                var query = new FlashcardQuery();
                 var result = await mediator.Send(query);
                 return Results.Ok(result);
             });

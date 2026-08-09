@@ -1,12 +1,11 @@
 ﻿using MediatR;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SenseiApi.Domain.Flahcards;
 using SenseiApi.Persistence;
 
 namespace SenseiApi.Features.Flashcards
 {
-    public class FlashcardHandler : IRequestHandler<FlashcardCommand, FlashcardResponse>
+    public class FlashcardHandler : IRequestHandler<FlashcardQuery, FlashcardResponse>
     {
         private readonly AppDbContext _dbContext;
 
@@ -15,17 +14,21 @@ namespace SenseiApi.Features.Flashcards
             _dbContext = dbContext;
         }
 
-        public async Task<FlashcardResponse> Handle(FlashcardCommand request, CancellationToken cancellationToken)
+        public async Task<FlashcardResponse> Handle(FlashcardQuery request, CancellationToken cancellationToken)
         {
-            var flashcard = await _dbContext.Flashcards
-                .Include(f => f.Translations)
-                .OrderBy(f => EF.Functions.Random())
-                .FirstOrDefaultAsync(cancellationToken);
+            var count = await _dbContext.Flashcards.CountAsync(cancellationToken);
 
-            if (flashcard is null)
+            if (count == 0)
             {
                 throw new InvalidOperationException("No flashcards found");
             }
+
+
+            var flashcard = await _dbContext.Flashcards
+                .Include(f => f.Translations.Where(b => b.Language == Domain.Enums.Language.English)) //temp
+                .OrderBy(f => Guid.NewGuid())
+                .FirstOrDefaultAsync(cancellationToken);
+
 
             return new FlashcardResponse(
                 flashcard.Id,

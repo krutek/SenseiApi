@@ -8,8 +8,8 @@ namespace SenseiApi.Persistence
     {
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
-        public DbSet<Flashcard> Flashcards => Set<Flashcard>();
-        public DbSet<FlashcardTranslation> FlashcardTranslations => Set<FlashcardTranslation>();
+        public DbSet<Flashcard> Flashcards { get; set; }
+        public DbSet<FlashcardTranslation> FlashcardTranslations {get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
