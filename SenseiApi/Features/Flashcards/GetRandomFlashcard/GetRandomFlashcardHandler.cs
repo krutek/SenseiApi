@@ -3,18 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using SenseiApi.Domain.Flahcards;
 using SenseiApi.Persistence;
 
-namespace SenseiApi.Features.Flashcards
+namespace SenseiApi.Features.Flashcards.GetRandomFlashcard
 {
-    public class FlashcardHandler : IRequestHandler<FlashcardQuery, FlashcardResponse>
+    public class GetRandomFlashcardHandler : IRequestHandler<GetRandomFlashcardQuery, GetRandomFlashcardResponse>
     {
         private readonly AppDbContext _dbContext;
 
-        public FlashcardHandler(AppDbContext dbContext)
+        public GetRandomFlashcardHandler(AppDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<FlashcardResponse> Handle(FlashcardQuery request, CancellationToken cancellationToken)
+        public async Task<GetRandomFlashcardResponse> Handle(GetRandomFlashcardQuery request, CancellationToken cancellationToken)
         {
             var count = await _dbContext.Flashcards.CountAsync(cancellationToken);
 
@@ -30,7 +30,7 @@ namespace SenseiApi.Features.Flashcards
                 .FirstOrDefaultAsync(cancellationToken);
 
 
-            return new FlashcardResponse(
+            return new GetRandomFlashcardResponse(
                 flashcard.Id,
                 flashcard.Japanese,
                 flashcard.Translations.FirstOrDefault()?.Translation ?? "not found");

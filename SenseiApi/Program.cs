@@ -6,7 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using SenseiApi.Features.Auth.Login;
 using SenseiApi.Features.Auth.Logout;
 using SenseiApi.Features.Auth.Register;
-using SenseiApi.Features.Flashcards;
+using SenseiApi.Features.Flashcards.GetFlashcardByType;
+using SenseiApi.Features.Flashcards.GetRandomFlashcard;
 using SenseiApi.Infrastructure.Authentication;
 using SenseiApi.Persistence;
 using System.Text;
@@ -91,7 +92,8 @@ namespace SenseiApi
             app.MapRegisterEndpoint();
             app.MapLoginEndpoint();
             app.MapLogoutEndpoint();
-            app.MapFlashcardsEndpoints();
+            app.MapGetRandomFlashcardsEndpoint();
+            app.MapGetFlashcardByTypeEndpoint();
                 
             app.UseHttpsRedirection();
 
