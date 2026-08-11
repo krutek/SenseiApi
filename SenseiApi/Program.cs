@@ -7,6 +7,7 @@ using SenseiApi.Features.Auth.Login;
 using SenseiApi.Features.Auth.Logout;
 using SenseiApi.Features.Auth.Register;
 using SenseiApi.Features.Flashcards.GetFlashcardByType;
+using SenseiApi.Features.Flashcards.GetFlashcardTypes;
 using SenseiApi.Features.Flashcards.GetRandomFlashcard;
 using SenseiApi.Infrastructure.Authentication;
 using SenseiApi.Persistence;
@@ -94,7 +95,9 @@ namespace SenseiApi
             app.MapLogoutEndpoint();
             app.MapGetRandomFlashcardsEndpoint();
             app.MapGetFlashcardByTypeEndpoint();
-                
+            app.MapGetFlashcardTypesEndpoint();
+
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();

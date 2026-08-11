@@ -6,6 +6,6 @@ namespace SenseiApi.Features.Flashcards.GetFlashcardByType
         Guid FlashcardId,
         string Japanese,
         string Answer,
-        FlashcardType FlashcardType
+        FlashcardType FlashcardTypeId
     );
 }
