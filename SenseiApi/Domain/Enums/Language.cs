@@ -1,4 +1,4 @@
-﻿namespace SenseiApi.Domain.Enums
+namespace SenseiApi.Domain.Enums
 {
     public enum Language
     {

@@ -1,6 +1,6 @@
 ﻿using SenseiApi.Domain.Enums;
 
-namespace SenseiApi.Domain.Flahcards
+namespace SenseiApi.Domain.Flashcards
 {
     public class FlashcardTranslation
     {

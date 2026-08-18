@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SenseiApi.Domain.Flahcards;
+using SenseiApi.Domain.Flashcards;
 using SenseiApi.Persistence;
 
 namespace SenseiApi.Features.Flashcards.GetRandomFlashcard
@@ -25,7 +25,7 @@ namespace SenseiApi.Features.Flashcards.GetRandomFlashcard
 
 
             var flashcard = await _dbContext.Flashcards
-                .Include(f => f.Translations.Where(b => b.Language == Domain.Enums.Language.English)) //temp
+                .Include(f => f.Translations.Where(b => b.Language == request.Language))
                 .OrderBy(f => Guid.NewGuid())
                 .FirstOrDefaultAsync(cancellationToken);
 
